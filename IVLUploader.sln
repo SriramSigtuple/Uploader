@@ -1,16 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{D5B78DEC-E756-43C1-8502-136EB5CC2E4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{0FA2FF87-1D0B-4170-B7C8-B170CFADA5B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IVLUploader", "IVLUploader\IVLUploader.csproj", "{73BC10C5-D322-4088-A186-0CCD99807FF8}"
 	ProjectSection(ProjectDependencies) = postProject
+		{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8} = {F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}
 		{01A954BC-8D0E-430F-81AC-6C78811A2851} = {01A954BC-8D0E-430F-81AC-6C78811A2851}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseViewModel", "BaseViewModel\BaseViewModel.csproj", "{01A954BC-8D0E-430F-81AC-6C78811A2851}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud_Models", "Cloud_Models\Cloud_Models.csproj", "{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7A057B6A-8D17-4E22-9CC4-F35DB3FB129A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +39,19 @@ Global
 		{01A954BC-8D0E-430F-81AC-6C78811A2851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01A954BC-8D0E-430F-81AC-6C78811A2851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01A954BC-8D0E-430F-81AC-6C78811A2851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D56DB7-4ACC-4013-9CC0-5288CCD87AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A057B6A-8D17-4E22-9CC4-F35DB3FB129A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A057B6A-8D17-4E22-9CC4-F35DB3FB129A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A057B6A-8D17-4E22-9CC4-F35DB3FB129A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A057B6A-8D17-4E22-9CC4-F35DB3FB129A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3643F2C-BBD5-44B3-8808-EBA4EEC5582F}
 	EndGlobalSection
 EndGlobal

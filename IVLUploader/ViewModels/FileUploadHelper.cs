@@ -11,6 +11,8 @@ using System.IO;
 using BaseViewModel;
 using System.Threading;
 using System.Net.Http.Handlers;
+using Cloud_Models.Models;
+
 namespace IVLUploader.ViewModels
 {
    public class FileUploadHelper:ViewBaseModel
@@ -61,7 +63,7 @@ namespace IVLUploader.ViewModels
         }
        private FileUploadHelper()
        {
-           UpdateServerStatus();
+           //UpdateServerStatus();
        }
 
 
@@ -92,7 +94,7 @@ namespace IVLUploader.ViewModels
            }
            catch (Exception)
            {
-               ResponseMessageFromServer r = new ResponseMessageFromServer();
+               ResponseModel r = new ResponseModel();
                r.message = "Check internet Connection";
                r.status = 100;
                responseMsg = JsonConvert.SerializeObject(r);
@@ -103,27 +105,27 @@ namespace IVLUploader.ViewModels
        }
        public void UpdateServerStatus()
        {
-           ThreadPool.QueueUserWorkItem(new WaitCallback(f=>
-           {
-           var releases = GetServerStatus();
-           Dictionary<string, string> resultValuesDic = new Dictionary<string, string>();
-           foreach (JProperty item in releases.Result.Children())
-           {
-               resultValuesDic.Add(item.Name, item.Value.ToString());
-           }
-               if(resultValuesDic.ContainsKey("status"))
-           {
-               if(resultValuesDic["status"]== "200")
-               {
-                   if (resultValuesDic["message"].Contains(serverIsRunning))
-                       IsServerRunning = true;
-                   else
-                       IsServerRunning = false;
-               }
-               else
-                   IsServerRunning = false;
-           }
-           }));
+           //ThreadPool.QueueUserWorkItem(new WaitCallback(f=>
+           //{
+           //var releases = GetServerStatus();
+           //Dictionary<string, string> resultValuesDic = new Dictionary<string, string>();
+           //foreach (JProperty item in releases.Result.Children())
+           //{
+           //    resultValuesDic.Add(item.Name, item.Value.ToString());
+           //}
+           //    if(resultValuesDic.ContainsKey("status"))
+           //{
+           //    if(resultValuesDic["status"]== "200")
+           //    {
+           //        if (resultValuesDic["message"].Contains(serverIsRunning))
+           //            IsServerRunning = true;
+           //        else
+           //            IsServerRunning = false;
+           //    }
+           //    else
+           //        IsServerRunning = false;
+           //}
+           //}));
        }
 
        public void Login2Server()
@@ -163,30 +165,30 @@ namespace IVLUploader.ViewModels
                }
            }));
        }
-       private async Task<JToken> GetServerStatus()
-       {
-           string responseMsg = null;
+       //private async Task<JToken> GetServerStatus()
+       //{
+       //    string responseMsg = null;
 
-           try
-           {
-               HttpClient p = new HttpClient();
-               HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new System.Uri(UploaderDetails.uploadValues.ServerStatusURL));
-               HttpResponseMessage response = await p.SendAsync(request);
-               if (response.IsSuccessStatusCode)
-               {
-                   responseMsg = await response.Content.ReadAsStringAsync();
-               }
-           }
-           catch (Exception ex)
-           {
-               ResponseMessageFromServer r = new ResponseMessageFromServer();
-               r.message = "Check internet Connection";
-               r.status = 100;
-               responseMsg = JsonConvert.SerializeObject(r);
-           }
-           return (JToken)JsonConvert.DeserializeObject(responseMsg);
+       //    try
+       //    {
+       //        HttpClient p = new HttpClient();
+       //        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, new System.Uri(UploaderDetails.uploadValues.ServerStatusURL));
+       //        HttpResponseMessage response = await p.SendAsync(request);
+       //        if (response.IsSuccessStatusCode)
+       //        {
+       //            responseMsg = await response.Content.ReadAsStringAsync();
+       //        }
+       //    }
+       //    catch (Exception ex)
+       //    {
+       //        ResponseModel r = new ResponseModel();
+       //        r.message = "Check internet Connection";
+       //        r.status = 100;
+       //        responseMsg = JsonConvert.SerializeObject(r);
+       //    }
+       //    return (JToken)JsonConvert.DeserializeObject(responseMsg);
          
-       }
+       //}
        public async Task<JToken> UploadFiles(FileStream stream,string fileName )
        {
            //HttpClient p = new HttpClient();
@@ -210,7 +212,7 @@ namespace IVLUploader.ViewModels
                        FileName = fileName
                    };
                    form.Add(content);
-                       form.Add(new StringContent(UploaderDetails.uploadValues.HardwareID), "HardwareId");
+                       form.Add(new StringContent(UploaderDetails.uploadValues.device_id), "HardwareId");
 
                    response = await p.PostAsync(UploaderDetails.uploadValues.UploadURL, form);
 
@@ -222,7 +224,7 @@ namespace IVLUploader.ViewModels
            }
            catch (Exception)
            {
-               ResponseMessageFromServer r = new ResponseMessageFromServer();
+               ResponseModel r = new ResponseModel();
                r.message = "Check internet Connection";
                r.status = 100;
                responseMsg = JsonConvert.SerializeObject(r);
@@ -254,33 +256,9 @@ namespace IVLUploader.ViewModels
 
    public static class UploaderDetails
    {
-       public static UploaderClass uploadValues;
+       public static UploaderModel uploadValues;
    }
-    [Serializable]
-   public class UploaderClass
-   {
-       public string email = "netraimage";
-       public string hashedPassword = "31jC4Smj";
-       public string LoginURL = "http://netraservice.azurewebsites.net/login";
-       public string UploadURL = "http://netraservice.azurewebsites.net/uploadImages";
-       public string ServerStatusURL = "http://chironapp.chironx.cloud/api/chironx/status";
-       public string UploadDirectoryPath = "";
-       public string HardwareID = "02-1701-0014";
-
-       public UploaderClass()
-       {
-
-       }
-   }
-   public class ResponseMessageFromServer
-   {
-       public int status = 0;
-       public string message = string.Empty;
-       public string token = string.Empty;
-       public ResponseMessageFromServer()
-       {
-
-       }
-   }
+   
+  
    
 }

@@ -34,23 +34,11 @@
     <Grid>
         <StackPanel Orientation="Vertical" >
             <StackPanel Orientation="Horizontal">
-             <Label Foreground="Black" Content="Upload Folder Path" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Width="121" Height="64">
-                    <Label.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform Y="20"/>
-                        </TransformGroup>
-                    </Label.RenderTransform>
-                </Label>
-                <TextBox Text="{Binding FolderPath, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="431" Height="45" />
-                <Button Content="Browse" Command="{Binding BrowseFolderPath }" Width="109" Margin="10,0,0,0"/>
                 <TextBlock Margin="0,10,0,0" Height="53"><InlineUIContainer>
             		<Label Foreground="Black" Content="Sever Status" Height="41" FontWeight="Bold" Width="86" Margin="10,0,0,0"/>
             	</InlineUIContainer><Run Text=" "/>
                     <InlineUIContainer>
-            		<Ellipse Name="ServerStatus_ellipse" Height="50" Width="50" Fill="{Binding Path= IsServerRunning, Converter={StaticResource BoolToServerStatusColor}, UpdateSourceTrigger=PropertyChanged}">
+            		<Ellipse Name="ServerStatus_ellipse" Height="50" Width="50" Fill="{Binding InternetCheckViewModel.InternetPresent, Converter={StaticResource BoolToServerStatusColor}, UpdateSourceTrigger=PropertyChanged}">
                    <Ellipse.ToolTip>
                        <TextBlock Text="{Binding Path=ServerRunningToolTip}" Foreground="Blue"/>
                    </Ellipse.ToolTip>
@@ -59,41 +47,21 @@
                     </InlineUIContainer>
                 </TextBlock>
             </StackPanel>
-            <TextBlock >
-                <Label Foreground="Black" Content="Hardware ID =" RenderTransformOrigin="0.5,0.5" Margin="25,0,0,0" FontWeight="Bold" Width="96">
-                	<Label.RenderTransform>
-                		<TransformGroup>
-                			<ScaleTransform/>
-                			<SkewTransform/>
-                			<RotateTransform/>
-                			<TranslateTransform Y="-10"/>
-                		</TransformGroup>
-                	</Label.RenderTransform>
-                </Label>
-                <TextBox Text="{Binding HardWareID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="123" RenderTransformOrigin="0.5,0.5">
-                	<TextBox.RenderTransform>
-                		<TransformGroup>
-                			<ScaleTransform/>
-                			<SkewTransform/>
-                			<RotateTransform/>
-                			<TranslateTransform Y="-10"/>
-                		</TransformGroup>
-                	</TextBox.RenderTransform>
-                </TextBox>
-                <Button Content="Login and Start Upload" Command="{Binding StartUploadCmd}" IsEnabled="{Binding Path= IsServerRunning}" Height="44" />
-                <Label Foreground="Black" Content="Uploaded Files Count : " RenderTransformOrigin="0.5,0.5" FontWeight="Bold">
-                	<Label.RenderTransform>
-                		<TransformGroup>
-                			<ScaleTransform/>
-                			<SkewTransform/>
-                			<RotateTransform/>
-                			<TranslateTransform Y="-10"/>
-                		</TransformGroup>
-                	</Label.RenderTransform>
-                </Label>
-                <Label Foreground="Black" Content="{Binding UploadedFileCount}" Height="35" Width="37"/>
+            <TextBlock ><Run Text=" "/><Run Text=" "/><Run Text=" "/><InlineUIContainer>
+                    <Label Foreground="Black" Content="Uploaded Files Count : " RenderTransformOrigin="0.5,0.5" FontWeight="Bold">
+                        <Label.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-10"/>
+                            </TransformGroup>
+                        </Label.RenderTransform>
+                    </Label>
+                </InlineUIContainer><Run Text=" "/><InlineUIContainer>
+                    <Label Foreground="Black" Content="{Binding UploadedFileCount}" Height="35" Width="37"/>
 
-            </TextBlock>
+                </InlineUIContainer></TextBlock>
 
             <ListView x:Name="filesUploadListView" Background="Transparent" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource ="{Binding UploadFiles, Mode=TwoWay}" Height="544">
                 <ListView.ItemContainerStyle>

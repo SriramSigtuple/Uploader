@@ -32,20 +32,20 @@ namespace IVLUploader
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (_currentVm.IsServerRunning && _currentVm.UploadFiles.Count > 0 && _currentVm.fileUploader.IsLogin)
-            {
-                MessageBoxResult res = MessageBox.Show("Do you want to cancel the current upload ?", "Warning", MessageBoxButton.YesNo);
-                if (res == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
-                //else
-                //{
-                //    _currentVm.
-                //}
-            }
-            else
-                _currentVm.WriteUploaderData(new object());
+            //if (_currentVm.IsServerRunning && _currentVm.UploadFiles.Count > 0 && _currentVm.fileUploader.IsLogin)
+            //{
+            //    MessageBoxResult res = MessageBox.Show("Do you want to cancel the current upload ?", "Warning", MessageBoxButton.YesNo);
+            //    if (res == MessageBoxResult.No)
+            //    {
+            //        e.Cancel = true;
+            //    }
+            //    //else
+            //    //{
+            //    //    _currentVm.
+            //    //}
+            //}
+            //else
+            //    _currentVm.WriteUploaderData(new object());
         }
 
     }

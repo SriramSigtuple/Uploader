@@ -1,104 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BaseViewModel;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Timers;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using BaseViewModel;
+using Cloud_Models.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Timers;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace IVLUploader.ViewModels
 {
-   public class MainWindowViewModel:ViewBaseModel
+    public class MainWindowViewModel:ViewBaseModel
     {
 
        Timer fileCheckTimer;
+       Timer AnalysisStatusCheckTimer;
        string DirectoryLocation = string.Empty;
        public FileUploadHelper fileUploader;
+       private InternetCheckViewModel internetCheckViewModel;
        DirectoryInfo SentDirPath;
        private const string serverNotRunning = "Cloud Server is not running";
        private const string serverRunning = "Cloud Server is running";
+        
        public MainWindowViewModel()
        {
-           UploadFiles = new BindingList<UploadFileViewModel>();
-           UploadFiles.ListChanged += UploadFiles_ListChanged;
-           string uploaderDetailsStr = string.Empty;
+            InternetCheckViewModel = new InternetCheckViewModel();
+           //UploadFiles = new BindingList<UploadFileViewModel>();
+           //UploadFiles.ListChanged += UploadFiles_ListChanged;
+           //string uploaderDetailsStr = string.Empty;
           
-           if (File.Exists(@"UploaderDetails.json"))
-           {
-               try
-               {
-                   uploaderDetailsStr = File.ReadAllText(@"UploaderDetails.json");
-                   UploaderDetails.uploadValues = (UploaderClass)JsonConvert.DeserializeObject(uploaderDetailsStr,typeof(UploaderClass));
-                   if (UploaderDetails.uploadValues == null)
-                   {
-                       UploaderDetails.uploadValues = new UploaderClass();
-                       uploaderDetailsStr = JsonConvert.SerializeObject(UploaderDetails.uploadValues);
-                       File.WriteAllText(@"UploaderDetails.json", uploaderDetailsStr);
-                   }
-               }
-               catch (Exception ex)
-               {
+           //if (File.Exists(@"UploaderDetails.json"))
+           //{
+           //    try
+           //    {
+           //        uploaderDetailsStr = File.ReadAllText(@"UploaderDetails.json");
+           //        UploaderDetails.uploadValues = (UploaderModel)JsonConvert.DeserializeObject(uploaderDetailsStr,typeof(UploaderModel));
+           //        if (UploaderDetails.uploadValues == null)
+           //        {
+           //            UploaderDetails.uploadValues = new UploaderModel();
+           //            uploaderDetailsStr = JsonConvert.SerializeObject(UploaderDetails.uploadValues);
+           //            File.WriteAllText(@"UploaderDetails.json", uploaderDetailsStr);
+           //        }
+           //    }
+           //    catch (Exception ex)
+           //    {
 
-                   UploaderDetails.uploadValues = new UploaderClass();
-                   uploaderDetailsStr = JsonConvert.SerializeObject(UploaderDetails.uploadValues);
-                   File.WriteAllText(@"UploaderDetails.json", uploaderDetailsStr);
-               }
-           }
+           //        UploaderDetails.uploadValues = new UploaderModel();
+           //        uploaderDetailsStr = JsonConvert.SerializeObject(UploaderDetails.uploadValues);
+           //        File.WriteAllText(@"UploaderDetails.json", uploaderDetailsStr);
+           //    }
+           //}
           
-           fileUploader = FileUploadHelper.GetInstance();
+          // fileUploader = FileUploadHelper.GetInstance();
            
-          HardWareID = UploaderDetails.uploadValues.HardwareID;
+          //HardWareID = UploaderDetails.uploadValues.device_id;
 
 
-           fileUploader.PropertyChanged += fileUploader_PropertyChanged;
-           RemoveFile = new RelayCommand(param=> this.RemoveFileFromCollection(param));
-           BrowseFolderPath = new RelayCommand(param => this.OpenFileDialog(param));
-           StartUploadCmd = new RelayCommand(param => this.Login(param));
-           CloseAppCmd = new RelayCommand(param => this.WriteUploaderData(param));
+          // fileUploader.PropertyChanged += fileUploader_PropertyChanged;
+          // RemoveFile = new RelayCommand(param=> this.RemoveFileFromCollection(param));
+          // BrowseFolderPath = new RelayCommand(param => this.OpenFileDialog(param));
+          // StartUploadCmd = new RelayCommand(param => this.Login(param));
+          // CloseAppCmd = new RelayCommand(param => this.WriteUploaderData(param));
  
-           fileCheckTimer = new Timer(5000);
+          // fileCheckTimer = new Timer(5000);
 
-           fileCheckTimer.Elapsed += fileCheckTimer_Elapsed;
-           fileCheckTimer.Start();
-           if (!string.IsNullOrEmpty(UploaderDetails.uploadValues.UploadDirectoryPath))
-           {
-               if (Directory.Exists(UploaderDetails.uploadValues.UploadDirectoryPath))
-                   FolderPath = UploaderDetails.uploadValues.UploadDirectoryPath;
-           }
-           else
-           {
-               FolderPath = new DirectoryInfo( System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.FullName;
-           }
-           GetZippedFiles();
+          // fileCheckTimer.Elapsed += fileCheckTimer_Elapsed;
+          // fileCheckTimer.Start();
+
+
+          //  AnalysisStatusCheckTimer = new Timer(5000);
+          //  AnalysisStatusCheckTimer.Elapsed += AnalysisStatusCheckTimer_Elapsed;
+          // if (!string.IsNullOrEmpty(UploaderDetails.uploadValues.UploadDirectoryPath))
+          // {
+          //     if (Directory.Exists(UploaderDetails.uploadValues.UploadDirectoryPath))
+          //         OutboxFolderPath = UploaderDetails.uploadValues.UploadDirectoryPath;
+          // }
+          // else
+          // {
+          //     OutboxFolderPath = new DirectoryInfo( System.Reflection.Assembly.GetExecutingAssembly().Location).Parent.FullName;
+          // }
+          // GetOutboxFiles();
 
        }
 
-      void fileUploader_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void AnalysisStatusCheckTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        void fileUploader_PropertyChanged(object sender, PropertyChangedEventArgs e)
        {
-           if (e.PropertyName.Contains("IsServerRunning"))
-           {
-               App.Current.Dispatcher.Invoke((Action)delegate
-               {
-                   IsServerRunning = fileUploader.IsServerRunning;
-               });
-           }
-           if (e.PropertyName.Contains("IsLogin"))
-           {
-               App.Current.Dispatcher.Invoke((Action)delegate
-               {
-                  StartUpload();
-               });
-           }
+           //if (e.PropertyName.Contains("IsServerRunning"))
+           //{
+           //    App.Current.Dispatcher.Invoke((Action)delegate
+           //    {
+           //        IsServerRunning = fileUploader.IsServerRunning;
+           //    });
+           //}
+           //if (e.PropertyName.Contains("IsLogin"))
+           //{
+           //    App.Current.Dispatcher.Invoke((Action)delegate
+           //    {
+           //       StartUpload();
+           //    });
+           //}
        }
 
       private string serverRunningToolTip = serverNotRunning;
@@ -111,21 +118,6 @@ namespace IVLUploader.ViewModels
               OnPropertyChanged("ServerRunningToolTip");
                 }
       }
-      private bool isServerRunning ;
-       public bool IsServerRunning
-        {
-            get { return true; }
-            set
-            {
-                if (isServerRunning != value)
-                isServerRunning = true;
-                if (isServerRunning)
-                    ServerRunningToolTip = serverRunning;
-                else
-                    ServerRunningToolTip = serverNotRunning;
-                OnPropertyChanged("IsServerRunning");
-            }
-        }
 
         private System.Windows.Media.Color offsetColor2 = System.Windows.Media.Colors.Red;
         public Color OffsetColor2
@@ -158,14 +150,14 @@ namespace IVLUploader.ViewModels
        }
 
 
-       public string HardWareID
-       {
-           get { return UploaderDetails.uploadValues.HardwareID; }
-           set { 
-               UploaderDetails.uploadValues.HardwareID = value;
-               OnPropertyChanged("HardWareID");
-           }
-       }
+       //public string HardWareID
+       //{
+       //    get { return UploaderDetails.uploadValues.device_id; }
+       //    set { 
+       //        UploaderDetails.uploadValues.device_id = value;
+       //        OnPropertyChanged("HardWareID");
+       //    }
+       //}
        private void Login(object param)
        {
            if (!fileUploader.IsLogin)
@@ -177,17 +169,17 @@ namespace IVLUploader.ViewModels
 
        private void StartUpload()
        {
-           if (fileUploader.IsLogin && IsServerRunning)
-           {
-               if (UploadFiles.Count > 0)
-               {
-                   if (!UploadFiles[0].IsUpload)
-                   {
-                       UploadFiles[0].IsUpload = true;
-                       UploadingFile = UploadFiles[0].FileName;
-                   }
-               }
-           }
+           //if (fileUploader.IsLogin && IsServerRunning)
+           //{
+           //    if (UploadFiles.Count > 0)
+           //    {
+           //        if (!UploadFiles[0].IsUpload)
+           //        {
+           //            UploadFiles[0].IsUpload = true;
+           //            UploadingFile = UploadFiles[0].FileName;
+           //        }
+           //    }
+           //}
        }
 
        private string uploadingFile = string.Empty;
@@ -201,13 +193,13 @@ namespace IVLUploader.ViewModels
        }
        void fileCheckTimer_Elapsed(object sender, ElapsedEventArgs e)
        {
-           fileUploader.UpdateServerStatus();
-           GetZippedFiles();
+           //fileUploader.UpdateServerStatus();
+          // GetOutboxFiles();
        }
 
-       void GetZippedFiles()
+       FileInfo GetActiveFileFromOutboxFiles()
        {
-           FileInfo[] finfArr = new DirectoryInfo(FolderPath).GetFiles();
+           FileInfo[] finfArr = new DirectoryInfo(OutboxFolderPath).GetFiles();
           
            foreach (FileInfo item in finfArr)
            { 
@@ -221,10 +213,24 @@ namespace IVLUploader.ViewModels
                }
                    });
            }
-           StartUpload();
-          
+            if (finfArr.Any())
+               return finfArr[0];
+            return new FileInfo("");
 
        }
+        void GetFileFromActiveDirectory()
+        {
+           FileInfo[] finfArr = new DirectoryInfo(ActiveFileFolderPath).GetFiles();
+            if (!finfArr.Any())
+            {
+                GetActiveFileFromOutboxFiles();
+            }
+               
+        }
+        void CreateCloudViewModel()
+        {
+
+        }
        void UploadFiles_ListChanged(object sender, ListChangedEventArgs e)
        {
            if (e.PropertyDescriptor != null)
@@ -263,9 +269,9 @@ namespace IVLUploader.ViewModels
                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                if (result == System.Windows.Forms.DialogResult.OK)
                {
-                   if (!FolderPath.Equals(dialog.SelectedPath))
+                   if (!OutboxFolderPath.Equals(dialog.SelectedPath))
                    {
-                       FolderPath = dialog.SelectedPath;
+                       OutboxFolderPath = dialog.SelectedPath;
                        
                    }
                }
@@ -282,24 +288,26 @@ namespace IVLUploader.ViewModels
                OnPropertyChanged("UploadedFileCount");
            }
        }
-       private string folderPath;
+       private string outboxfolderPath;
 
-       public string FolderPath
+       public string OutboxFolderPath
        {
-           get { return folderPath; }
+           get { return outboxfolderPath; }
            set {
-               folderPath = value;
+               outboxfolderPath = value;
                UploadFiles.Clear();
-               DirectoryInfo dirInf = new DirectoryInfo(folderPath);
+               DirectoryInfo dirInf = new DirectoryInfo(outboxfolderPath);
                if (!Directory.Exists(dirInf.Parent.FullName + Path.DirectorySeparatorChar + "SentItems"))
                    SentDirPath = Directory.CreateDirectory(dirInf.Parent.FullName + Path.DirectorySeparatorChar + "SentItems");
                else
                    SentDirPath = new DirectoryInfo(dirInf.Parent.FullName + Path.DirectorySeparatorChar + "SentItems");
-               UploaderDetails.uploadValues.UploadDirectoryPath = FolderPath;
-               OnPropertyChanged("FolderPath");
+               UploaderDetails.uploadValues.UploadDirectoryPath = OutboxFolderPath;
+               OnPropertyChanged("OutboxFolderPath");
 
            }
        }
+
+        private string activeFileFolderPath;
        public ICommand RemoveFile
        {
            get;
@@ -341,6 +349,16 @@ namespace IVLUploader.ViewModels
             get;
             set;
         }
+        public string ActiveFileFolderPath { get => activeFileFolderPath; set => activeFileFolderPath = value; }
+        public InternetCheckViewModel InternetCheckViewModel { get => internetCheckViewModel;
+            set
+            {
+                internetCheckViewModel = value;
+                OnPropertyChanged("InternetCheckViewModel");
+            }
+           
+        }
+
         public void WriteUploaderData(object param)
         {
           string  uploaderDetailsStr = JsonConvert.SerializeObject(UploaderDetails.uploadValues);

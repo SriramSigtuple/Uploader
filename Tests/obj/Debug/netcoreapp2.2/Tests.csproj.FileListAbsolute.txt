@@ -1,0 +1,17 @@
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.dll
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\NUnit3.TestAdapter.pdb
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\nunit.engine.netstandard.dll
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Tests.deps.json
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Tests.runtimeconfig.json
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Tests.runtimeconfig.dev.json
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Tests.dll
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Tests.pdb
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.csprojAssemblyReference.cache
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.csproj.CoreCompileInputs.cache
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.AssemblyInfoInputs.cache
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.AssemblyInfo.cs
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.dll
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.pdb
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Cloud_Models.dll
+D:\Projects\Uploader\Tests\bin\Debug\netcoreapp2.2\Cloud_Models.pdb
+D:\Projects\Uploader\Tests\obj\Debug\netcoreapp2.2\Tests.csproj.CopyComplete
