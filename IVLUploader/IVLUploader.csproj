@@ -51,20 +51,39 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NlogViewer, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\NlogViewer-master\NlogViewer-master\NlogViewer\bin\Debug\NlogViewer.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="ReachFramework" />
+    <Reference Include="SimpleLogging.Core, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleLogging.Core.0.5.0\lib\portable-net4+sl4+wp7+win8\SimpleLogging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleLogging.NLog, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleLogging.NLog.0.5.0\lib\net40\SimpleLogging.NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,20 +112,30 @@
     <Compile Include="Convertors\Bool2ServerStatusConvertor.cs" />
     <Compile Include="Convertors\BoolProgressBarForegroundColor.cs" />
     <Compile Include="Convertors\Int2StringConvertor.cs" />
+    <Compile Include="Convertors\LogBgValueConverter.cs" />
+    <Compile Include="Convertors\LogFgValueConverter.cs" />
+    <Compile Include="GlobalVariables.cs" />
+    <Compile Include="GlobalMethodsHelper.cs" />
+    <Compile Include="LogginVM.cs" />
+    <Compile Include="LoginHelper.cs" />
+    <Compile Include="Utilities\RESTClientHelper.cs" />
     <Compile Include="Utilities\URL_ComputeHelper.cs" />
-    <Compile Include="ViewModels\CloudUtility\MandaraCloudHelper.cs" />
-    <Compile Include="ViewModels\GetStatusAnalysisViewModel.cs" />
-    <Compile Include="ViewModels\InitiateAnalysisViewModel.cs" />
-    <Compile Include="ViewModels\CloudFlowViewModel.cs" />
-    <Compile Include="ViewModels\UploadImagesViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\GetAnalysisResultViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\GetStatusAnalysisViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\InitiateAnalysisViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\UploadImagesViewModel.cs" />
     <Compile Include="ViewModels\FileUploadHelper.cs" />
     <Compile Include="ViewModels\AllFileUploads.cs" />
-    <Compile Include="ViewModels\CloudViewModel.cs" />
-    <Compile Include="ViewModels\CreateAnalysisViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\CloudViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\CreateAnalysisViewModel.cs" />
+    <Compile Include="ViewModels\CloudVMs\LoginViewModel.cs" />
+    <Compile Include="ViewModels\SentItemsViewModel.cs" />
+    <Compile Include="ViewModels\OutboxViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\InternetCheckViewModel.cs" />
-    <Compile Include="ViewModels\UploadFileViewModel.cs" />
+    <Compile Include="Views\LogginViewUC.xaml.cs">
+      <DependentUpon>LogginViewUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UploadFileItemView.xaml.cs">
       <DependentUpon>UploadFileItemView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +158,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\LogginViewUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UploadFileItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -156,6 +189,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="nLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

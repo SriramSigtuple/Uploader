@@ -24,13 +24,13 @@
             </Border.Background>
         </Border>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,-16">
-                <TextBlock Name="textBlock" Margin="10,10,0,32" FontWeight="{Binding IsUpload,Converter={StaticResource BoolToFontWeight}}" Width="970"> <!--"{Binding IsUpload,Converter={StaticResource Bool2UploadStatusConvertor}}"--> 
-                                <Label  Content="FileName = "/>
-                                <Label Content="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Width="631" Height="27"/>
-                                <ProgressBar HorizontalContentAlignment="Stretch" Visibility="{Binding IsUpload, Converter={StaticResource BoolToVis}}" Foreground="Green" Margin="10,0,0,0" Width="184" Height="29" Value="{Binding FileUploader.Progress}"/>
-                                <Label Content="{Binding FileUploader.Progress,Converter={StaticResource Int2StringConvertor}}"  Visibility="{Binding IsUpload, Converter={StaticResource BoolToVis} }" Width="33" Height="27"/>
-                                <Label Content="%"  Visibility="{Binding IsUpload, Converter={StaticResource BoolToVis}}" Width="26"/>
-                </TextBlock>
-            </StackPanel>
+            <TextBlock x:Name="textBlock" Margin="10,10,0,32" Width="970"><InlineUIContainer>
+                        <!--"{Binding IsUpload,Converter={StaticResource Bool2UploadStatusConvertor}}"--> 
+                        <Label  Content="Logs = "/>
+                    </InlineUIContainer><Run Text=" "/><InlineUIContainer>
+                        <Label Content="{Binding LogValue, UpdateSourceTrigger=PropertyChanged}" Width="631" Height="27"/>
+                    </InlineUIContainer><Run Text=" "/><Run Text=" "/><InlineUIContainer>
+                    </InlineUIContainer><Run Text=" "/></TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>

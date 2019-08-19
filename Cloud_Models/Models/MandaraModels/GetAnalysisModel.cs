@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Cloud_Models.Models
 {
     [Serializable]
-    public class GetAnalysisModel
+    public class GetAnalysisModel : BaseCloudModel
     {
         /// <summary>
-        /// Address to start the analysis in the cloud
+        /// The analysis id is the value obtained from create analysis api response.
         /// </summary>
-
-        public URL_Model getAnalysisURL = new URL_Model
+        public string analysis_id = string.Empty;
+        public string analysis_status = string.Empty;
+        public GetAnalysisModel()
         {
-            API_URL = UploaderModel.API_URL,
-            API_URL_Start_Point = string.Empty,
-            API_URL_Mid_Point = string.Empty,
-            API_URL_End_Point = string.Empty
-        };
-        
+            MethodType = HttpMethod.Get;
+        }
 
 
     }

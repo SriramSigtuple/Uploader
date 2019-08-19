@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using IVLUploader.ViewModels;
 using Newtonsoft.Json;
 using System.IO;
+using NLog;
+
 namespace IVLUploader
 {
     /// <summary>
@@ -23,6 +25,7 @@ namespace IVLUploader
     public partial class MainWindow : Window
     {
         MainWindowViewModel _currentVm;
+
         public MainWindow()
         {
             InitializeComponent();

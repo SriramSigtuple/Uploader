@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Net;
+using System.Net.Http;
 
 namespace Cloud_Models.Models
 {
-    public class ResponseModel
+    public class Response_CookieModel
     {
-        public int status = 0;
-        public string message = string.Empty;
-        public string token = string.Empty;
-        public string cookie = string.Empty;
-        public ResponseModel()
+        public Cookie Cookie;
+        public string responseBody;
+        public HttpStatusCode StatusCode;
+        public Response_CookieModel()
         {
 
         }

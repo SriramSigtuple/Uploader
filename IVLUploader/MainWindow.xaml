@@ -5,6 +5,8 @@
         xmlns:usercontrols ="clr-namespace:IntuUploader.Views"
         xmlns:ivlControls ="clr-namespace:IntuUploader.Controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactions"
+       xmlns:Logger="clr-namespace:NlogViewer;assembly=NlogViewer"
+        
         Title="Intuvision Uploader" Height="700" Width="1067.042" WindowState="Normal" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -59,11 +61,10 @@
                         </Label.RenderTransform>
                     </Label>
                 </InlineUIContainer><Run Text=" "/><InlineUIContainer>
-                    <Label Foreground="Black" Content="{Binding UploadedFileCount}" Height="35" Width="37"/>
 
                 </InlineUIContainer></TextBlock>
 
-            <ListView x:Name="filesUploadListView" Background="Transparent" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource ="{Binding UploadFiles, Mode=TwoWay}" Height="544">
+            <!--<ListView x:Name="filesUploadListView" Background="Transparent" Margin="0,20,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource ="{Binding LogginVM, Mode=TwoWay}" Height="544">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Style.Resources>
@@ -80,7 +81,8 @@
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
+            <usercontrols:LogginViewUC/>
         </StackPanel>
     </Grid>
 </Window>

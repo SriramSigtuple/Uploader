@@ -4,23 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Cloud_Models.Models
 {
     [Serializable]
-  public class UploadModel
+  public class UploadModel : BaseCloudModel
     {
-        /// <summary>
-        /// url is the address to upload image/s to the cloud.
-        /// </summary>
-        public URL_Model uploadURL = new URL_Model {
-            API_URL = UploaderModel.API_URL,
-            API_URL_Start_Point = "analyses/",
-            API_URL_Mid_Point = "",
-            API_URL_End_Point = "/input"
-        };
 
-        public string url = string.Empty;
         /// <summary>
         /// image is the binary data of the image to be uploaded to the cloud.
         /// </summary>
@@ -39,12 +30,18 @@ namespace Cloud_Models.Models
         /// <summary>
         /// relative path of the image which indicates whether its a left or right eye the value is for eg :slide_id/eyetype/filename
         /// </summary>
-        public string relative_path = string.Empty;
+        public string[] relative_path ;
 
         /// <summary>
         /// The checksum values of the image file to indicates which is not tampered with while uploading.
         /// </summary>
         public string[] checksums ;
+
+        /// <summary>
+        /// Array which holds values of left or right side of eye
+        /// </summary>
+        public string[] eyeSideArr;
+
         /// <summary>
         /// The analysis id is the value obtained from create analysis api response.
         /// </summary>
@@ -52,8 +49,13 @@ namespace Cloud_Models.Models
 
         public UploadModel()
         {
-            uploadURL.API_URL_Mid_Point = analysis_id;
-            
+            URL_Model.API_URL_Start_Point = "analyses";
+            URL_Model.API_URL_Mid_Point = analysis_id;
+            URL_Model.API_URL_End_Point = "input";
+            MethodType = HttpMethod.Post;
+            BodyMessageType = "FormData";
+
+
         }
     }
 }

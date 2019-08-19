@@ -1,21 +1,11 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace Cloud_Models.Models
 {
     [Serializable]
-        public class CreateAnalysisModel
+        public class CreateAnalysisModel : BaseCloudModel
     {
-        /// <summary>
-        /// The url is value to create analysis address to create an analysis in the cloud.
-        /// </summary>
-
-        public URL_Model createAnalysisURL = new URL_Model
-        {
-            API_URL = UploaderModel.API_URL,
-            API_URL_Start_Point = string.Empty,
-            API_URL_Mid_Point = string.Empty,
-            API_URL_End_Point = "/analyses"
-        };
         /// <summary>
         /// The sample_id is the value which is the MRN (Medical Record of Number) of the patient.
         /// </summary>
@@ -57,7 +47,8 @@ namespace Cloud_Models.Models
         public int PatientID = 0;
         public CreateAnalysisModel()
         {
-
+            MethodType = HttpMethod.Post;
+        
         }
 
     }

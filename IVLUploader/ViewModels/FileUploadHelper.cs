@@ -94,9 +94,9 @@ namespace IVLUploader.ViewModels
            }
            catch (Exception)
            {
-               ResponseModel r = new ResponseModel();
-               r.message = "Check internet Connection";
-               r.status = 100;
+               Response_CookieModel r = new Response_CookieModel();
+               r.responseBody = "Check internet Connection";
+               //r.status = 100;
                responseMsg = JsonConvert.SerializeObject(r);
            }
            return (JToken)JsonConvert.DeserializeObject(responseMsg);
@@ -181,7 +181,7 @@ namespace IVLUploader.ViewModels
        //    }
        //    catch (Exception ex)
        //    {
-       //        ResponseModel r = new ResponseModel();
+       //        Response_CookieModel r = new Response_CookieModel();
        //        r.message = "Check internet Connection";
        //        r.status = 100;
        //        responseMsg = JsonConvert.SerializeObject(r);
@@ -224,9 +224,9 @@ namespace IVLUploader.ViewModels
            }
            catch (Exception)
            {
-               ResponseModel r = new ResponseModel();
-               r.message = "Check internet Connection";
-               r.status = 100;
+               Response_CookieModel r = new Response_CookieModel();
+               //r.message = "Check internet Connection";
+               //r.status = 100;
                responseMsg = JsonConvert.SerializeObject(r);
            }
            

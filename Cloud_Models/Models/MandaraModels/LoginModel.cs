@@ -1,21 +1,12 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace Cloud_Models.Models
 {
     [Serializable]
-    public class LoginModel
+    public class LoginModel : BaseCloudModel
     {
-        /// <summary>
-        /// The URL has the value of the login url to the cloud.
-        /// </summary>
-
-        public URL_Model login_URL = new URL_Model
-        {
-            API_URL = UploaderModel.API_URL,
-            API_URL_Start_Point = "",
-            API_URL_Mid_Point = "",
-            API_URL_End_Point = "auth/signin"
-        };
+        
         /// <summary>
         /// The username is the value which is the public key to login to the cloud.
         /// </summary>
@@ -34,5 +25,9 @@ namespace Cloud_Models.Models
         /// </summary>
         public string cookie = string.Empty;
 
+        public LoginModel()
+        {
+            MethodType = HttpMethod.Post;
+        }
     }
 }
